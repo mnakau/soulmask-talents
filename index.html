@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soulmask 才能検索 | 日本語対応表</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg:        #0e0c0a;
+    --surface:   #17140f;
+    --card:      #1f1a13;
+    --border:    #3a2f1e;
+    --gold:      #c8922a;
+    --gold-dim:  #7a5718;
+    --amber:     #e8a84a;
+    --text:      #d4c4a0;
+    --text-dim:  #7a6a50;
+    --green:     #4a8c5c;
+    --blue:      #3a6a9c;
+    --purple:    #7a4a9c;
+    --orange:    #b86a2a;
+    --red:       #9c3a3a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    background: linear-gradient(180deg, #1a1208 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--gold-dim);
+    padding: 28px 24px 20px;
+    text-align: center;
+    position: relative;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .site-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 4vw, 32px);
+    color: var(--amber);
+    letter-spacing: 0.12em;
+    text-shadow: 0 0 20px rgba(200,146,42,0.4);
+  }
+  .site-sub {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── メインレイアウト ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+
+  /* ── 検索・フィルターバー ── */
+  .search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--gold); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    padding: 5px 14px;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--gold-dim); color: var(--text); }
+  .filter-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--amber); }
+
+  /* ── 統計バー ── */
+  .stats-bar {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stats-bar span { color: var(--amber); font-weight: 700; }
+
+  /* ── テーブル ── */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+  }
+  thead tr {
+    background: var(--card);
+    border-bottom: 1px solid var(--gold-dim);
+  }
+  th {
+    color: var(--gold);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 12px 14px;
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  th:hover { color: var(--amber); }
+  th .sort-icon { margin-left: 4px; opacity: 0.4; }
+  th.sorted .sort-icon { opacity: 1; }
+
+  tbody tr {
+    border-bottom: 1px solid #1e1810;
+    transition: background 0.1s;
+  }
+  tbody tr:hover { background: var(--card); }
+  tbody tr:last-child { border-bottom: none; }
+
+  td {
+    padding: 10px 14px;
+    vertical-align: top;
+  }
+
+  .td-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .td-en {
+    font-weight: 500;
+    color: var(--text);
+    min-width: 160px;
+  }
+  .td-ja {
+    color: var(--amber);
+    font-weight: 500;
+    min-width: 120px;
+  }
+  .td-ja.empty { color: var(--text-dim); font-style: italic; }
+  .td-effect { color: var(--text-dim); font-size: 13px; max-width: 320px; }
+  .td-cat { white-space: nowrap; }
+
+  /* 編集 */
+  .ja-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--gold-dim);
+    color: var(--amber);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    min-width: 100px;
+    outline: none;
+    padding: 2px 4px;
+    transition: border-color 0.15s;
+  }
+  .ja-input:focus { border-bottom-color: var(--gold); background: rgba(200,146,42,0.06); }
+  .ja-input::placeholder { color: var(--text-dim); font-weight: 400; font-size: 12px; }
+
+  /* カテゴリバッジ */
+  .badge {
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 2px 7px;
+  }
+  .badge-combat   { background: rgba(154,58,58,0.25); color: #e08080; border: 1px solid rgba(154,58,58,0.4); }
+  .badge-survival { background: rgba(74,140,92,0.2); color: #7ecf96; border: 1px solid rgba(74,140,92,0.35); }
+  .badge-speed    { background: rgba(58,106,156,0.2); color: #7aaee0; border: 1px solid rgba(58,106,156,0.35); }
+  .badge-craft    { background: rgba(122,74,156,0.2); color: #c088e0; border: 1px solid rgba(122,74,156,0.35); }
+  .badge-tribe    { background: rgba(184,106,42,0.2); color: #e0aa70; border: 1px solid rgba(184,106,42,0.35); }
+  .badge-utility  { background: rgba(80,80,80,0.25); color: #a0a090; border: 1px solid rgba(80,80,80,0.4); }
+  .badge-title    { background: rgba(200,146,42,0.2); color: var(--amber); border: 1px solid rgba(200,146,42,0.4); }
+  .badge-negative { background: rgba(40,30,20,0.5); color: #808070; border: 1px solid #3a3020; }
+
+  /* ソース表示 */
+  .source-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ── アクションバー ── */
+  .action-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    padding: 8px 16px;
+    transition: all 0.15s;
+  }
+  .btn:hover { border-color: var(--gold-dim); color: var(--text); }
+  .btn-primary {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--amber);
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: #8a6520; }
+
+  /* ── 空状態 ── */
+  .empty-state {
+    text-align: center;
+    padding: 48px;
+    color: var(--text-dim);
+  }
+  .empty-state .icon { font-size: 32px; margin-bottom: 12px; }
+
+  /* ── ヒント ── */
+  .hint {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold-dim);
+    border-radius: 4px;
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+  }
+
+  /* ── トースト ── */
+  #toast {
+    background: var(--gold-dim);
+    border-radius: 6px;
+    bottom: 24px;
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    padding: 10px 20px;
+    pointer-events: none;
+    position: fixed;
+    right: 24px;
+    transition: opacity 0.3s;
+    z-index: 100;
+  }
+  #toast.show { opacity: 1; }
+
+  /* ── レスポンシブ ── */
+  @media (max-width: 600px) {
+    td, th { padding: 8px 10px; }
+    .td-effect { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="site-title">⚔ SOULMASK 才能データベース</div>
+  <div class="site-sub">才能の英語名 / 日本語名 / 効果 を紐付けて管理する検索ツール</div>
+</header>
+
+<div class="container">
+
+  <div class="hint">
+    💡 「日本語名」欄は自由に入力できます。入力内容はブラウザに自動保存されます。英語名・日本語名・効果・IDで横断検索できます。
+  </div>
+
+  <div class="search-bar">
+    <input class="search-input" id="searchInput" placeholder="英語名・日本語名・効果・IDで検索..." type="text">
+    <div class="filter-group" id="filterGroup"></div>
+  </div>
+
+  <div class="stats-bar" id="statsBar"></div>
+
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th data-col="id">ID <span class="sort-icon">↕</span></th>
+          <th data-col="en">英語名 <span class="sort-icon">↕</span></th>
+          <th data-col="ja">日本語名（編集可）<span class="sort-icon">↕</span></th>
+          <th data-col="effect">効果</th>
+          <th data-col="cat">カテゴリ <span class="sort-icon">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="icon">🔍</div>
+      <div>該当する才能が見つかりません</div>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn btn-primary" onclick="exportData()">💾 日本語名をエクスポート（JSON）</button>
+    <button class="btn" onclick="importData()">📂 インポート</button>
+    <button class="btn" onclick="clearAll()">🗑 入力をリセット</button>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── データ定義 ──────────────────────────────────────────────
+const TALENTS = [
+  // === 称号才能 ===
+  { id:'600011', en:'Weapon Master',       ja:'', effect:'全武器DMG +10%, 攻撃速度 +10%', cat:'title' },
+  { id:'600012', en:'Hardbone',            ja:'', effect:'レジリエンス50%超なら会心無効化', cat:'title' },
+  { id:'600013', en:'Heartcaptor',         ja:'', effect:'敵トルソへのDMG +12%', cat:'title' },
+  { id:'600014', en:'Nightwalker',         ja:'', effect:'夜間: 移動速度+10%, 会心+5%', cat:'title' },
+  { id:'600016', en:'Fly Cutter Assassin', ja:'', effect:'攻撃命中時: 出血（ATK×20%/s 10秒, 重複可）', cat:'title' },
+  { id:'600018', en:'Archery Master',      ja:'', effect:'弓: 20%の確率で弱点ヒット + 50%スロー6秒', cat:'title' },
+  { id:'600041', en:'Death Bringer',       ja:'', effect:'HP30%以下の敵攻撃時25%でATK/移動速度+20%, 攻撃速度+10% (CD:30s)', cat:'title' },
+  { id:'600055', en:'Mad Worker',          ja:'', effect:'最大士気 +100%', cat:'title' },
+  { id:'600059', en:'Blood Drinker',       ja:'', effect:'出血中の近接相手に与えた出血DMGの40%（自身出血時80%）を回復', cat:'title' },
+  { id:'600060', en:'The Dauntless',       ja:'', effect:'回避不可、代わりにヒットスタン無効', cat:'title' },
+  { id:'600063', en:'Fate-Choker',         ja:'', effect:'近接攻撃者の才能発動確率を命中ごとに-5% (最大5スタック, 12秒)', cat:'title' },
+  { id:'600068', en:'Oppressor',           ja:'', effect:'命中時15%でDread付与(DMG上限300) 15秒 (CD:30s)', cat:'title' },
+
+  // === 攻撃系 ===
+  { id:'100031', en:'Powerful Attack Lv3',  ja:'', effect:'ATK +9%', cat:'combat' },
+  { id:'100021', en:'Fierce Attack Lv3',    ja:'', effect:'攻撃速度 +9%', cat:'speed' },
+  { id:'100011', en:'Swift Pace Lv3',       ja:'', effect:'移動速度 +9%', cat:'speed' },
+  { id:'160583', en:'Fatal Rhythm Lv3',     ja:'', effect:'[鋭爪] スタミナ70%超で攻撃時、ATK+4% & 攻撃速度+4% 最大5スタック10秒', cat:'combat' },
+  { id:'160481', en:'Overwhelming Force Lv1', ja:'', effect:'[鋭爪] 攻撃時スタミナ15消費でDMG+5%、敵スタミナ-5', cat:'combat' },
+  { id:'160483', en:'Overwhelming Force Lv3', ja:'', effect:'[鋭爪] 攻撃時スタミナ15消費でDMG+15%、敵スタミナ-10', cat:'combat' },
+  { id:'150071', en:'Extraordinary Talent Lv3', ja:'', effect:'全確率発動才能のトリガー確率 +20%', cat:'utility' },
+  { id:'160121', en:'Surprise Attack Lv1', ja:'', effect:'10%の確率で任意部位ヒットが弱点扱い', cat:'combat' },
+  { id:'160123', en:'Surprise Attack Lv3', ja:'', effect:'20%の確率で任意部位ヒットが弱点扱い', cat:'combat' },
+
+  // === 攻撃速度・共鳴系 ===
+  { id:'170001', en:'Breezy Downpour Lv1', ja:'', effect:'移動速度-10%、攻撃速度+10%（永続トレードオフ）', cat:'speed' },
+  { id:'170003', en:'Breezy Downpour Lv3', ja:'', effect:'移動速度-30%、攻撃速度+30%（永続トレードオフ）', cat:'speed' },
+  { id:'170291', en:'Attack-Defense Resonance - Attack Lv1', ja:'', effect:'攻撃時10%でATK/DEFの低い方を最大20%底上げ (CD:60s)', cat:'combat' },
+  { id:'170293', en:'Attack-Defense Resonance - Attack Lv3', ja:'', effect:'攻撃時20%でATK/DEFの低い方を最大20%底上げ (CD:30s)', cat:'combat' },
+  { id:'170621', en:'Swiftness Resonance - Attack Lv1', ja:'', effect:'攻撃時10%で移動速度/攻撃速度の低い方を底上げ (CD:60s)', cat:'speed' },
+  { id:'170623', en:'Swiftness Resonance - Attack Lv3', ja:'', effect:'攻撃時20%で移動速度/攻撃速度の低い方を底上げ (CD:30s)', cat:'speed' },
+  { id:'170301', en:'Damage Resonance - Attack Lv1', ja:'', effect:'攻撃時10%でDMG増加/DMG軽減の低い方を50%底上げ (CD:60s)', cat:'combat' },
+  { id:'170303', en:'Damage Resonance - Attack Lv3', ja:'', effect:'攻撃時20%でDMG増加/DMG軽減の低い方を50%底上げ (CD:30s)', cat:'combat' },
+
+  // === 才能CD系 ===
+  { id:'160631', en:'Mind-Heart Unison Lv1', ja:'', effect:'命中時10%で全タイマー才能を5秒以内に即発動 (CD:25s)', cat:'combat' },
+  { id:'160633', en:'Mind-Heart Unison Lv3', ja:'', effect:'命中時20%で全タイマー才能を10秒以内に即発動 (CD:25s)', cat:'combat' },
+  { id:'170181', en:'Courageous Current Lv1', ja:'', effect:'命中時5%で全才能CDリセット (CD:60s)', cat:'combat' },
+  { id:'170183', en:'Courageous Current Lv3', ja:'', effect:'命中時15%で全才能CDリセット (CD:30s)', cat:'combat' },
+
+  // === 生存系 ===
+  { id:'170131', en:'Life Shackles Lv1', ja:'', effect:'被攻撃時15%でHP回復無効・被ダメ上限2%/Max HP (CD:60s, 15秒)', cat:'survival' },
+  { id:'170133', en:'Life Shackles Lv3', ja:'', effect:'被攻撃時15%でHP回復無効・被ダメ上限2%/Max HP (CD:60s, 25秒)', cat:'survival' },
+  { id:'170081', en:'Embers Lv1',        ja:'', effect:'瀕死防止。致死攻撃を3回免疫(8秒間) (CD:45s)', cat:'survival' },
+  { id:'170083', en:'Embers Lv3',        ja:'', effect:'瀕死防止。致死攻撃を9回免疫(12秒間) (CD:45s)', cat:'survival' },
+  { id:'170641', en:'Resurgence Lv1',    ja:'', effect:'HP全快or復活時: 10秒間攻撃速度・移動速度+20%, スロー無効 (CD:60s)', cat:'survival' },
+  { id:'170643', en:'Resurgence Lv3',    ja:'', effect:'HP全快or復活時: 10秒間攻撃速度・移動速度+20%, スロー無効 (CD:30s)', cat:'survival' },
+  { id:'160021', en:'Wild Nature Awakened Lv1', ja:'', effect:'HP30%以下: ATK+10%, スタミナ+10/s, DEF-20% 15秒 (CD:30s)', cat:'survival' },
+  { id:'160023', en:'Wild Nature Awakened Lv3', ja:'', effect:'HP30%以下: ATK+20%, スタミナ+20/s, DEF-20% 15秒 (CD:30s)', cat:'survival' },
+  { id:'160111', en:'Crave for Blood Lv1', ja:'', effect:'近接攻撃時25%でDMG10%を吸血', cat:'survival' },
+  { id:'160113', en:'Crave for Blood Lv3', ja:'', effect:'近接攻撃時25%でDMG30%を吸血', cat:'survival' },
+  { id:'170571', en:'Perfect Absorption Lv1', ja:'', effect:'全HP回復効果 +20%', cat:'survival' },
+  { id:'170573', en:'Perfect Absorption Lv3', ja:'', effect:'全HP回復効果 +50%', cat:'survival' },
+  { id:'120011', en:'Blood Activating Lv1',  ja:'', effect:'HP自然回復速度 +50%', cat:'survival' },
+  { id:'120013', en:'Blood Activating Lv3',  ja:'', effect:'HP自然回復速度 +200%', cat:'survival' },
+  { id:'160011', en:'Last Radiance Lv1',  ja:'', effect:'HP10%以下時: 5秒間でHP20%回復 (CD:40s)', cat:'survival' },
+  { id:'160013', en:'Last Radiance Lv3',  ja:'', effect:'HP30%以下時: 5秒間でHP20%回復 (CD:40s)', cat:'survival' },
+
+  // === 部族系 ===
+  { id:'400011', en:'Tribe - Power of Erosion Lv1', ja:'', effect:'[鋭爪] 火石・毒牙・追放者・略奪者へのDMG +2%', cat:'tribe' },
+  { id:'400013', en:'Tribe - Power of Erosion Lv3', ja:'', effect:'[鋭爪] 火石・毒牙・追放者・略奪者へのDMG +8%', cat:'tribe' },
+  { id:'400021', en:'Tribe - Wild Power Lv3',       ja:'', effect:'[鋭爪] 会心DMG +10%', cat:'tribe' },
+  { id:'400031', en:'Tribe - Power of Crit Lv3',    ja:'', effect:'[鋭爪] 会心率 +8%', cat:'tribe' },
+  { id:'410011', en:'Tribe - Power of Defense Lv3', ja:'', effect:'[火石] DEF +9%', cat:'tribe' },
+  { id:'410021', en:'Tribe - Power of Tenacity Lv3',ja:'', effect:'[火石] 最大レジリエンス +25', cat:'tribe' },
+  { id:'420501', en:'Tribe - Breath of the Wildwolf Lv1', ja:'', effect:'[荒狼] スタミナ回復+5%, 攻撃時麻痺DMG+2', cat:'tribe' },
+  { id:'420503', en:'Tribe - Breath of the Wildwolf Lv3', ja:'', effect:'[荒狼] スタミナ回復+15%, 攻撃時麻痺DMG+6', cat:'tribe' },
+  { id:'420511', en:'Tribe - Might of the Wildwolf Lv1', ja:'', effect:'[荒狼] DMG+4%, 攻撃時出血スタック+2', cat:'tribe' },
+  { id:'420513', en:'Tribe - Might of the Wildwolf Lv3', ja:'', effect:'[荒狼] DMG+8%, 攻撃時出血スタック+6', cat:'tribe' },
+  { id:'420601', en:'Tribe - Breath of the Savagehorn Lv1', ja:'', effect:'[蛮角] 最大スタミナ+10, RESIL-Down DEF+3%', cat:'tribe' },
+  { id:'420603', en:'Tribe - Breath of the Savagehorn Lv3', ja:'', effect:'[蛮角] 最大スタミナ+20, RESIL-Down DEF+10%', cat:'tribe' },
+  { id:'420611', en:'Tribe - Might of the Savagehorn Lv1', ja:'', effect:'[蛮角] DMG軽減+4%, 攻撃時昏倒DMG+2', cat:'tribe' },
+  { id:'420613', en:'Tribe - Might of the Savagehorn Lv3', ja:'', effect:'[蛮角] DMG軽減+8%, 攻撃時昏倒DMG+6', cat:'tribe' },
+
+  // === 職人系 ===
+  { id:'171001', en:'Skillful Hand Lv1',     ja:'', effect:'[荒狼] 武器制作時5%で追加ステータス付与（最大1つ）', cat:'craft' },
+  { id:'171002', en:'Skillful Hand Lv2',     ja:'', effect:'[荒狼] 武器制作時10%で追加ステータス付与（最大2つ）', cat:'craft' },
+  { id:'171011', en:'Masterwork Armor Lv1',  ja:'', effect:'[蛮角] 防具制作時5%で追加ステータス付与（最大1つ）', cat:'craft' },
+  { id:'171012', en:'Masterwork Armor Lv2',  ja:'', effect:'[蛮角] 防具制作時10%で追加ステータス付与（最大2つ）', cat:'craft' },
+  { id:'160711', en:'Refined Armor Lv1',     ja:'', effect:'[火石] 高品質防具制作確率 +5%', cat:'craft' },
+  { id:'160713', en:'Refined Armor Lv3',     ja:'', effect:'[火石] 高品質防具制作確率 +10%', cat:'craft' },
+  { id:'160721', en:'Weapon Enhancement Lv1',ja:'', effect:'[火石] 高品質武器制作確率 +5%', cat:'craft' },
+  { id:'160723', en:'Weapon Enhancement Lv3',ja:'', effect:'[火石] 高品質武器制作確率 +10%', cat:'craft' },
+  { id:'171021', en:"Armorer's Focus Lv1",  ja:'', effect:'[職人] 高品質防具確率 +5%', cat:'craft' },
+  { id:'171023', en:"Armorer's Focus Lv3",  ja:'', effect:'[職人] 高品質防具確率 +10%', cat:'craft' },
+  { id:'171031', en:"Weaponsmith's Focus Lv1", ja:'', effect:'[職人] 高品質武器確率 +5%', cat:'craft' },
+  { id:'171033', en:"Weaponsmith's Focus Lv3", ja:'', effect:'[職人] 高品質武器確率 +10%', cat:'craft' },
+  { id:'160731', en:'Refined Tool Lv3',      ja:'', effect:'[職人] 高品質ツール確率 +10%', cat:'craft' },
+  { id:'160811', en:'Crafting Speed Up Lv3', ja:'', effect:'[職人] 製作クエスト時間 -30%', cat:'craft' },
+  { id:'160821', en:'Accelerate Weapon Crafting Lv3', ja:'', effect:'[職人] 武器制作時間 -30%', cat:'craft' },
+  { id:'160831', en:'Accelerate Armor Crafting Lv3',  ja:'', effect:'[職人] 防具制作時間 -30%', cat:'craft' },
+  { id:'171061', en:'Tool Maintenance Lv3',  ja:'', effect:'[職人] ツール修理耐久消費 -50%', cat:'craft' },
+  { id:'171041', en:'Weapon Maintenance Lv3',ja:'', effect:'[荒狼] 武器修理耐久消費 -50%', cat:'craft' },
+  { id:'171051', en:'Armor Maintenance Lv3', ja:'', effect:'[蛮角] 防具修理耐久消費 -50%', cat:'craft' },
+
+  // === ユーティリティ ===
+  { id:'100061', en:'Full Vitality Lv3',    ja:'', effect:'最大HP +9%', cat:'utility' },
+  { id:'100041', en:'Enhance DEF Lv3',      ja:'', effect:'DEF +9%', cat:'utility' },
+  { id:'100051', en:'Injury Relieve Lv3',   ja:'', effect:'被DMG -9%', cat:'utility' },
+  { id:'120021', en:'Full Stamina Lv3',     ja:'', effect:'スタミナ回復 +50%', cat:'utility' },
+  { id:'110011', en:'Camel Cow Lv3',        ja:'', effect:'最大積載量 +60%', cat:'utility' },
+  { id:'160421', en:'Quick Bandaging Lv1',  ja:'', effect:'包帯処置時間 -30%', cat:'utility' },
+  { id:'160423', en:'Quick Bandaging Lv3',  ja:'', effect:'包帯処置時間 -50%', cat:'utility' },
+  { id:'160701', en:'Backpack Expansion Lv1', ja:'', effect:'インベントリ +10スロット', cat:'utility' },
+  { id:'160703', en:'Backpack Expansion Lv3', ja:'', effect:'インベントリ +30スロット', cat:'utility' },
+  { id:'600053', en:'The Chosen',           ja:'', effect:'レアアイテムドロップ確率 +20%', cat:'utility' },
+
+  // === ネガティブ才能 ===
+  { id:'200011', en:'Slow Pace Lv1',        ja:'', effect:'移動速度 -5%', cat:'negative' },
+  { id:'200021', en:'Weak Attack Lv1',      ja:'', effect:'攻撃速度 -5%', cat:'negative' },
+  { id:'200031', en:'Attack Weakening Lv1', ja:'', effect:'ATK -3%', cat:'negative' },
+  { id:'200041', en:'Weakened DEF Lv1',     ja:'', effect:'DEF -3%', cat:'negative' },
+  { id:'260991', en:'Devious Heart',        ja:'', effect:'離反時に認知度が低い部族員を連れていく場合がある', cat:'negative' },
+  { id:'600051', en:'Famous Trash',         ja:'', effect:'最大士気 -50%', cat:'negative' },
+  { id:'600056', en:'Born Revolt',          ja:'', effect:'認知度低下2倍速・低認知度で資産ごと離反、認知度400以下で背後攻撃DMG+15%', cat:'negative' },
+];
+
+const CAT_LABELS = {
+  combat:   { label:'戦闘・攻撃',  cls:'badge-combat' },
+  survival: { label:'生存・回復',  cls:'badge-survival' },
+  speed:    { label:'速度・共鳴',  cls:'badge-speed' },
+  craft:    { label:'職人・制作',  cls:'badge-craft' },
+  tribe:    { label:'部族固有',    cls:'badge-tribe' },
+  utility:  { label:'汎用',        cls:'badge-utility' },
+  title:    { label:'称号才能',    cls:'badge-title' },
+  negative: { label:'ネガティブ',  cls:'badge-negative' },
+};
+
+// ── 状態 ──────────────────────────────────────────────────
+let data = TALENTS.map(t => ({ ...t }));
+let filterCat = 'all';
+let sortCol = 'id';
+let sortDir = 1;
+let searchQ = '';
+
+// ── LocalStorage ──────────────────────────────────────────
+const LS_KEY = 'soulmask_ja_v1';
+function applyJaMap(map) {
+  data.forEach(t => { if (map[t.id]?.ja) t.ja = map[t.id].ja; });
+}
+function loadLocal() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+    data.forEach(t => { if (saved[t.id]) t.ja = saved[t.id]; });
+  } catch {}
+}
+function saveOne(id, val) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+    saved[id] = val;
+    localStorage.setItem(LS_KEY, JSON.stringify(saved));
+  } catch {}
+}
+
+// ── フィルターボタン ───────────────────────────────────────
+function buildFilters() {
+  const fg = document.getElementById('filterGroup');
+  const cats = ['all', ...Object.keys(CAT_LABELS)];
+  cats.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn' + (c === 'all' ? ' active' : '');
+    b.textContent = c === 'all' ? 'すべて' : CAT_LABELS[c].label;
+    b.dataset.cat = c;
+    b.addEventListener('click', () => {
+      filterCat = c;
+      document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      render();
+    });
+    fg.appendChild(b);
+  });
+}
+
+// ── ソート ─────────────────────────────────────────────────
+document.querySelectorAll('th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = 1; }
+    document.querySelectorAll('th[data-col]').forEach(x => x.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.sort-icon').textContent = sortDir === 1 ? '↑' : '↓';
+    render();
+  });
+});
+
+// ── 検索 ───────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQ = e.target.value.toLowerCase();
+  render();
+});
+
+// ── レンダリング ────────────────────────────────────────────
+function render() {
+  let rows = data.filter(t => {
+    if (filterCat !== 'all' && t.cat !== filterCat) return false;
+    if (!searchQ) return true;
+    return (
+      t.id.includes(searchQ) ||
+      t.en.toLowerCase().includes(searchQ) ||
+      t.ja.toLowerCase().includes(searchQ) ||
+      t.effect.toLowerCase().includes(searchQ)
+    );
+  });
+
+  rows.sort((a, b) => {
+    const av = a[sortCol] || '';
+    const bv = b[sortCol] || '';
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  const empty = document.getElementById('emptyState');
+
+  if (rows.length === 0) {
+    empty.style.display = '';
+  } else {
+    empty.style.display = 'none';
+    rows.forEach(t => {
+      const cat = CAT_LABELS[t.cat] || { label: t.cat, cls: 'badge-utility' };
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="td-id">${t.id}</td>
+        <td class="td-en">${esc(t.en)}</td>
+        <td class="td-ja">
+          <input class="ja-input" data-id="${t.id}" placeholder="日本語名を入力..." value="${esc(t.ja)}" type="text">
+        </td>
+        <td class="td-effect">${esc(t.effect)}</td>
+        <td class="td-cat"><span class="badge ${cat.cls}">${cat.label}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('.ja-input').forEach(inp => {
+      inp.addEventListener('input', e => {
+        const id = e.target.dataset.id;
+        const val = e.target.value;
+        const t = data.find(x => x.id === id);
+        if (t) { t.ja = val; saveOne(id, val); }
+      });
+    });
+  }
+
+  const total = data.length;
+  const shown = rows.length;
+  const filled = data.filter(t => t.ja.trim()).length;
+  document.getElementById('statsBar').innerHTML =
+    `表示: <span>${shown}</span> / ${total}件　　日本語名登録済み: <span>${filled}</span> / ${total}件`;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── エクスポート ────────────────────────────────────────────
+function exportData() {
+  const out = {};
+  data.forEach(t => { if (t.ja) out[t.id] = { en: t.en, ja: t.ja }; });
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'soulmask_talent_ja.json';
+  a.click();
+  toast('エクスポートしました ✓');
+}
+
+// ── インポート ──────────────────────────────────────────────
+function importData() {
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = '.json';
+  inp.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const obj = JSON.parse(ev.target.result);
+        let count = 0;
+        data.forEach(t => {
+          if (obj[t.id]?.ja) { t.ja = obj[t.id].ja; saveOne(t.id, t.ja); count++; }
+        });
+        render();
+        toast(`${count}件インポートしました ✓`);
+      } catch { toast('JSONの読み込みに失敗しました'); }
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
+
+// ── リセット ────────────────────────────────────────────────
+function clearAll() {
+  if (!confirm('入力した日本語名をすべてリセットしますか？')) return;
+  localStorage.removeItem(LS_KEY);
+  data.forEach(t => t.ja = '');
+  render();
+  toast('リセットしました');
+}
+
+// ── トースト ────────────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ── 初期化 ──────────────────────────────────────────────────
+buildFilters();
+(async () => {
+  try {
+    const res = await fetch('./talent_ja.json');
+    if (res.ok) {
+      const shared = await res.json();
+      applyJaMap(shared);
+      toast('共有データを読み込みました ✓');
+    }
+  } catch {}
+  loadLocal();
+  render();
+})();
+</script>
+</body>
+</html>
