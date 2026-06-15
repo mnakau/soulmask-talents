@@ -1,1 +1,18 @@
-{}
+{
+  "100011": {
+    "en": "Swift Pace Lv3",
+    "ja": "速身"
+  },
+  "100021": {
+    "en": "Fierce Attack Lv3",
+    "ja": "猛攻"
+  },
+  "100031": {
+    "en": "Powerful Attack Lv3",
+    "ja": "テスト"
+  },
+  "600011": {
+    "en": "Weapon Master",
+    "ja": "武器マスター"
+  }
+}
