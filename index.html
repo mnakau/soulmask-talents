@@ -1185,7 +1185,29 @@ let searchQ = '';
 // ── LocalStorage ──────────────────────────────────────────
 const LS_KEY = 'soulmask_ja_v1';
 function applyJaMap(map) {
-  data.forEach(t => { if (map[t.id]?.ja) t.ja = map[t.id].ja; });
+  const existingIds = new Set(data.map(t => t.id));
+  data.forEach(t => {
+    const m = map[t.id];
+    if (!m) return;
+    if (m.en) t.en = m.en;
+    if (m.ja) t.ja = m.ja;
+    if (m.desc) t.desc = m.desc;
+  });
+  // Add entries present in JSON but missing from TALENTS (e.g. Lv2 entries)
+  const catMap = {
+    '100':'speed','110':'speed','120':'speed','130':'speed','140':'speed','150':'speed',
+    '160':'combat','161':'combat','162':'combat','163':'combat','164':'combat',
+    '165':'combat','166':'combat','167':'combat','168':'combat','169':'combat',
+    '170':'survival','180':'craft',
+    '200':'combat','210':'combat','220':'combat','230':'combat','240':'combat',
+    '300':'personality','400':'origin','500':'preference',
+    '700':'resonance','800':'resonance','900':'resonance'
+  };
+  Object.entries(map).forEach(([id, m]) => {
+    if (existingIds.has(id) || !m.en) return;
+    const cat = catMap[id.slice(0,3)] || catMap[id.slice(0,2)] || 'general';
+    data.push({ id, en: m.en, ja: m.ja || '', effect: m.desc || '', cat });
+  });
 }
 function loadLocal() {
   try {
